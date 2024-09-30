@@ -21,7 +21,6 @@ import { rscGetMetadata } from "~/lib/surveys/rsc-fetchers";
 import { DebugRSC } from "~/components/debug/DebugRSC";
 import { setLocaleIdServerContext } from "~/i18n/rsc-context";
 import { LANG, SURVEY_SLUG, SURVEY_YEAR } from "~/constants";
-import { Suspense } from "react";
 
 export async function generateMetadata(): Promise<Metadata | undefined> {
   return await rscGetMetadata({

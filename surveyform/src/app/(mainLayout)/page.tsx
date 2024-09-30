@@ -16,6 +16,8 @@ import TokyoDev from "~/components/common/TokyoDev";
 import { setLocaleIdServerContext } from "~/i18n/rsc-context";
 import { DynamicT } from "@devographics/react-i18n";
 import SurveyOpeningWords from "~/components/page/SurveyOpeningWords";
+import { Suspense } from "react";
+import { Loading } from "~/components/ui/Loading";
 
 // revalidating is important so we get fresh values from the cache every now and then without having to redeploy
 export const revalidate = DEFAULT_REVALIDATE_S;
@@ -70,7 +72,9 @@ const EditionPageComponent = ({
          * we can use a token expression instead "general.{{editionId}}.survey_intro"
          */}
         <DynamicT token={`general.${edition.id}.survey_intro`} />
-        <EditionMain edition={edition} />
+        <Suspense>
+          <EditionMain edition={edition} />
+        </Suspense>
       </div>
       <Faq edition={edition} />
       <SurveyCredits edition={edition} />
