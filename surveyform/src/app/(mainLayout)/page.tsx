@@ -1,6 +1,6 @@
 import Support from "~/components/common/Support";
 import { getEditionImageUrl } from "~/lib/surveys/helpers/getEditionImageUrl";
-import { rscMustGetSurveyEditionFromUrl } from "./rsc-fetchers";
+import { rscMustGetSurveyEditionFromUrl } from "~/app/(mainLayout)/survey/[slug]/[year]/rsc-fetchers";
 import { DebugRSC } from "~/components/debug/DebugRSC";
 import Faq from "~/components/common/Faq";
 import Translators from "~/components/common/Translators";
@@ -9,12 +9,13 @@ import SurveyCredits from "~/components/surveys/SurveyCredits";
 import EditionMessage from "~/components/surveys/SurveyMessage";
 
 import { type EditionMetadata } from "@devographics/types";
-import { EditionMain } from "./client-components";
+import { EditionMain } from "~/app/(mainLayout)/survey/[slug]/[year]/client-components";
 
 import { DEFAULT_REVALIDATE_S } from "~/app/revalidation";
 import TokyoDev from "~/components/common/TokyoDev";
 import { setLocaleIdServerContext } from "~/i18n/rsc-context";
 import { DynamicT } from "@devographics/react-i18n";
+import SurveyOpeningWords from "~/components/page/SurveyOpeningWords";
 
 // revalidating is important so we get fresh values from the cache every now and then without having to redeploy
 export const revalidate = DEFAULT_REVALIDATE_S;
@@ -43,7 +44,6 @@ interface SurveyPageServerProps {
 
 const EditionPageComponent = ({
   edition,
-  imageUrl,
 }: {
   edition: EditionMetadata;
   imageUrl?: string;
@@ -51,19 +51,19 @@ const EditionPageComponent = ({
   const { survey } = edition;
   const { name } = survey;
   return (
-    <div className="survey-page contents-narrow">
+    <div className="survey-page contents-medium">
       <EditionMessage edition={edition} />
 
-      {!!imageUrl && (
-        <h1 className="survey-image">
-          <img
-            width={600}
-            height={400}
-            src={imageUrl}
-            alt={`${name} ${edition.year}`}
-          />
-        </h1>
-      )}
+      <h1 className="survey-title">
+        State of <span>React Native</span>
+        <br /> 2024
+      </h1>
+      <h3 className="survey-subtitle">
+        A survey about everything <span>React Native</span>
+      </h3>
+
+      <SurveyOpeningWords />
+
       <div className="survey-page-block">
         {/**
          * If moving to a client component,
@@ -74,8 +74,6 @@ const EditionPageComponent = ({
       </div>
       <Faq edition={edition} />
       <SurveyCredits edition={edition} />
-      <TokyoDev />
-      <Translators />
     </div>
   );
 };
@@ -92,12 +90,10 @@ export default async function SurveyPage({
       slug,
       year,
     });
-
-  const imageUrl = getEditionImageUrl(edition);
   return (
     <div>
       <DebugRSC {...{ ___rscMustGetSurveyEditionFromUrl }} />
-      <EditionPageComponent edition={edition} imageUrl={imageUrl} />
+      <EditionPageComponent edition={edition} />
       {edition.survey.partners && <Support edition={edition} />}
     </div>
   );

@@ -17,8 +17,10 @@ export async function rscGetSurveyEditionFromUrl(params: {
   /** 2022 */
   year: string;
 }) {
+  const slug = "state-of-react-native";
+  const year = "2024";
+
   try {
-    const { slug, year } = params;
     const { surveyId, editionId } = surveyParamsLookup({
       surveySlug: slug,
       editionSlug: year,
@@ -30,13 +32,7 @@ export async function rscGetSurveyEditionFromUrl(params: {
     });
     return result;
   } catch (err) {
-    console.error(
-      "Could not load survey",
-      params.slug,
-      params.year,
-      "error:",
-      err
-    );
+    console.error("Could not load survey", slug, year, "error:", err);
     return null;
   }
 }
@@ -52,21 +48,25 @@ export async function rscMustGetSurveyEditionFromUrl(params: {
   return edition;
 }
 
-export async function rscGetEditionsMetadata({ removeHidden }: {
-  /** Remove hidden and preview survey 
+export async function rscGetEditionsMetadata({
+  removeHidden,
+}: {
+  /** Remove hidden and preview survey
    * (so they are not statically rendered, they may not be valid yet) */
-  removeHidden?: boolean
+  removeHidden?: boolean;
 } = {}) {
   const surveys = (await rscFetchSurveysMetadata())?.data || [];
   const editions = surveys.map((s) => s.editions).flat();
   if (removeHidden) {
-    return editions.filter(e => [SurveyStatusEnum.CLOSED, SurveyStatusEnum.OPEN].includes(e.status))
+    return editions.filter((e) =>
+      [SurveyStatusEnum.CLOSED, SurveyStatusEnum.OPEN].includes(e.status)
+    );
   }
-  return editions
+  return editions;
 }
 
 // TODO: can't find the existing helper that does that?
 export const getEditionParams = (e: EditionMetadata) => ({
   slug: e.surveyId.replaceAll("_", "-"),
   year: String(e.year),
-})
+});

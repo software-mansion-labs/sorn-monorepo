@@ -31,21 +31,6 @@ const EditionItem = async ({
       <div>
         <div className="survey-image">
           <Link href={homePath} className="survey-link">
-            <div className="survey-image-inner">
-              {imageUrl && (
-                <img
-                  /*
-                  priority={
-                    typeof status !== "undefined" && [1, 2].includes(status)
-                  }*/
-                  width={300}
-                  height={200}
-                  src={imageUrl}
-                  alt={getEditionTitle({ edition })}
-                //quality={100}
-                />
-              )}
-            </div>
             <span className="survey-name">
               <span>
                 {name} {year}

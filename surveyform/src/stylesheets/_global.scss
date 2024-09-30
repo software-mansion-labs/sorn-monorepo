@@ -160,17 +160,6 @@ Page-specific styles
 .main-contents,
 .header {
   flex: 1 0 auto;
-  padding: $spacing;
-
-  @include small {
-    padding: math.div($spacing, 2);
-  }
-  @include medium {
-    padding: $spacing;
-  }
-  @include large {
-    padding: $spacing $spacing * 2;
-  }
 }
 
 .datatable-above {
@@ -199,7 +188,7 @@ Page-specific styles
 
 .footer {
   text-align: center;
-  margin: $spacing * 2 $spacing 0 $spacing;
+  margin-top: $spacing * 2;
   border-top: $border;
   font-size: $smallish-font;
   padding: $spacing;

@@ -6,34 +6,22 @@ import { routes } from "~/lib/routes";
 import { EditionMetadata } from "@devographics/types";
 import { getEditionHomePath } from "~/lib/surveys/helpers/getEditionHomePath";
 
-
-
-import { T, useI18n } from "@devographics/react-i18n"
+import { T, useI18n } from "@devographics/react-i18n";
 
 const Navigation = ({ edition }: { edition?: EditionMetadata }) => {
-  const { locale, localizePath } = useI18n()
   return (
     <div className="nav-wrapper">
       <div className="nav-surveys">
-        <Link className="nav-surveys-link" href={localizePath(routes.home.href)}>
-          <T token="nav.surveys" />
+        <Link className="nav-surveys-link" href={"/"}>
+          {/* TODO: replace with smaller image */}
+          <img
+            width={30}
+            height={30}
+            src={`${process.env.NEXT_PUBLIC_ASSETS_URL}/surveys/state-of-react-native-logo.png`}
+            alt={`logo`}
+          />
+          State of React Native
         </Link>
-        {edition && (
-          <>
-            {" "}
-            <span>/</span>{" "}
-            <Link
-              className="nav-surveys-link"
-              href={getEditionHomePath({ edition, locale })}
-            >
-              {edition.survey.name} {edition.year}
-            </Link>
-          </>
-        )}
-      </div>
-
-      <div className="nav-item-locale">
-        <LocaleSwitcher />
       </div>
     </div>
   );

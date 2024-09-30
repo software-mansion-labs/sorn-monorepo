@@ -27,6 +27,7 @@ import { UserWithResponses } from "~/lib/responses/typings";
 import PlausibleProvider from "next-plausible";
 import { type LocaleParsed, type Locale } from "@devographics/i18n";
 import { I18nContextProvider } from "@devographics/react-i18n";
+import { LANG } from "~/constants";
 
 export interface AppLayoutProps {
   /** Locale extracted from cookies server-side */
@@ -69,7 +70,7 @@ export function ClientLayout(props: AppLayoutProps) {
     : "";
 
   return (
-    <html lang={params.lang}>
+    <html lang={LANG}>
       {/*
       <head /> will contain the components returned by the nearest parent
       head.tsx. Find out more at https://beta.nextjs.org/docs/api-reference/file-conventions/head
@@ -96,10 +97,7 @@ export function ClientLayout(props: AppLayoutProps) {
           >
             <I18nContextProvider locale={localeStrings} allLocales={locales}>
               {/** @ts-ignore */}
-              <ErrorBoundary
-                proposeReload={true}
-                proposeHomeRedirection={true}
-              >
+              <ErrorBoundary proposeReload={true} proposeHomeRedirection={true}>
                 <KeydownContextProvider>
                   <UserMessagesProvider>
                     {addWrapper ? <Layout>{children}</Layout> : children}

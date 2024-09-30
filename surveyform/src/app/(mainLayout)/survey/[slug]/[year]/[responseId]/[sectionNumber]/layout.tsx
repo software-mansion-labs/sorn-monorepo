@@ -2,11 +2,9 @@ import type { Metadata } from "next";
 import { SectionProvider } from "~/components/SectionContext/SectionProvider";
 import { rscGetSurveyEditionFromUrl } from "../../rsc-fetchers";
 import { rscGetMetadata } from "~/lib/surveys/rsc-fetchers";
+import { LANG, SURVEY_SLUG, SURVEY_YEAR } from "~/constants";
 
 interface SurveySectionParams {
-  lang: string;
-  slug: string;
-  year: string;
   sectionNumber: string;
 }
 
@@ -15,7 +13,15 @@ export async function generateMetadata({
 }: {
   params: SurveySectionParams;
 }): Promise<Metadata | undefined> {
-  return await rscGetMetadata({ params });
+  const paramsExtended = {
+    params: {
+      lang: LANG,
+      slug: SURVEY_SLUG,
+      year: SURVEY_YEAR,
+      sectionNumber: params.sectionNumber,
+    },
+  };
+  return await rscGetMetadata(paramsExtended);
 }
 
 export default async function WithSectionLayout({
@@ -25,7 +31,16 @@ export default async function WithSectionLayout({
   children: React.ReactNode;
   params: SurveySectionParams;
 }) {
-  const edition = await rscGetSurveyEditionFromUrl(params);
+  const paramsExtended = {
+    params: {
+      lang: LANG,
+      slug: SURVEY_SLUG,
+      year: SURVEY_YEAR,
+      sectionNumber: params.sectionNumber,
+    },
+  };
+
+  const edition = await rscGetSurveyEditionFromUrl(paramsExtended.params);
 
   if (!edition) {
     throw new Error(

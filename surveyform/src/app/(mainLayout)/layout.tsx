@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { EditionProvider } from "~/components/SurveyContext/Provider";
 
-import { rscMustGetSurveyEditionFromUrl } from "./rsc-fetchers";
-import ClientLayout from "~/app/[lang]/ClientLayout";
+import { rscMustGetSurveyEditionFromUrl } from "~/app/(mainLayout)/survey/[slug]/[year]/rsc-fetchers";
+import ClientLayout from "~/app/ClientLayout";
 import EditionLayout from "~/components/common/EditionLayout";
 
 import { getEditionHomePath } from "~/lib/surveys/helpers/getEditionHomePath";
@@ -20,18 +20,13 @@ import {
 import { rscGetMetadata } from "~/lib/surveys/rsc-fetchers";
 import { DebugRSC } from "~/components/debug/DebugRSC";
 import { setLocaleIdServerContext } from "~/i18n/rsc-context";
-interface SurveyPageServerProps {
-  lang: string;
-  slug: string;
-  year: string;
-}
+import { LANG, SURVEY_SLUG, SURVEY_YEAR } from "~/constants";
+import { Suspense } from "react";
 
-export async function generateMetadata({
-  params,
-}: {
-  params: SurveyPageServerProps;
-}): Promise<Metadata | undefined> {
-  return await rscGetMetadata({ params });
+export async function generateMetadata(): Promise<Metadata | undefined> {
+  return await rscGetMetadata({
+    params: { lang: LANG, slug: SURVEY_SLUG, year: SURVEY_YEAR },
+  });
 }
 
 /**
@@ -46,14 +41,14 @@ export default async function SurveyLayout({
   children: React.ReactNode;
   params: { slug: string; year: string; lang: string };
 }) {
-  setLocaleIdServerContext(params.lang); // Needed for "ServerT"
+  setLocaleIdServerContext(LANG); // Needed for "ServerT"
   const { data: edition } = await rscMustGetSurveyEditionFromUrl(params);
   const {
     locale,
     localeId,
     error: localeError,
   } = await rscLocaleFromParams({
-    lang: params.lang,
+    lang: LANG,
     contexts: [
       // TODO: we should have a shared layout between (mainLayout) pages and "survey/[slug]/[year]" that handle locales
       // so we don't have to reload commonContext translations in the surveys page

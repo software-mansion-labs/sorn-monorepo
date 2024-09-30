@@ -5,14 +5,14 @@ import {
 } from "@devographics/fetch";
 import type { Metadata } from "next";
 import { publicConfig } from "~/config/public";
-import { rscMustGetSurveyEditionFromUrl } from "~/app/[lang]/survey/[slug]/[year]/rsc-fetchers";
+import { rscMustGetSurveyEditionFromUrl } from "~/app/(mainLayout)/survey/[slug]/[year]/rsc-fetchers";
 import { getCommonContexts, getEditionContexts } from "~/i18n/config";
 import { getEditionTitle } from "~/lib/surveys/helpers/getEditionTitle";
 import { getEditionImageUrl } from "~/lib/surveys/helpers/getEditionImageUrl";
 import { getSectionTokens } from "~/i18n/survey";
 import { serverConfig } from "~/config/server";
 import { rscTeapot } from "~/i18n/components/ServerT";
-import { setLocaleIdServerContext } from "~/i18n/rsc-context";
+import { LANG } from "~/constants";
 
 export const rscFetchSurveysMetadata = cache(
   async (options?: FetcherFunctionOptions) => {
@@ -43,13 +43,13 @@ export const rscGetMetadata = async ({
   params: { lang: string; sectionNumber?: string; slug: string; year: string };
 }) => {
   // Important : this allow nested server-side method to know the current language
-  // setLocaleIdServerContext(params.lang)
+  // setLocaleIdServerContext(LANG)
   const { lang, sectionNumber } = params;
   const { data: edition } = await rscMustGetSurveyEditionFromUrl(params);
 
   const contexts = getEditionContexts(edition, true);
 
-  const { t, error } = await rscTeapot({ contexts, localeId: params.lang });
+  const { t, error } = await rscTeapot({ contexts, localeId: LANG });
   if (error)
     throw new Error(
       "Could not access translation function:" + JSON.stringify(error)

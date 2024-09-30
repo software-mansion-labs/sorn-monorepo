@@ -2,11 +2,15 @@
   color: var(--text-color-dark);
 }
 .nav-surveys-link {
+
   &,
   &:link,
   &:visited {
     color: var(--text-color);
   }
+  gap: 16px;
+  display: flex;
+  align-items: center;
 }
 
 .section-nav-loading {

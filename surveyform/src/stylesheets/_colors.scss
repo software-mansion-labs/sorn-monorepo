@@ -61,6 +61,19 @@ $navyLight: #303652;
 $navy: #232840;
 $navyDark: #1a1f35;
 
+// SMW COLORS
+
+$primary-100: #001a72;
+$primary-80: #2e4593;
+$primary-60: #5a6fb6;
+$primary-40: #919fcf;
+$primary-20: #c2c7e4;
+$accent-yellow: #ffe780;
+$accent-blue: #87cce8;
+$accent-red: #ffa3a1;
+$accent-green: #b1dfd0;
+$white: #fff;
+
 /*****************************************************************************\
   "functional" colors
 \*****************************************************************************/
@@ -71,40 +84,40 @@ $active-color-dark: $tealDark;
 $contrast-color: $red;
 $contrast-color-dark: $redDark;
 
-$bg-color: $greyDarker;
-$bg-color-light: $greyDarkish;
-$bg-color-lighter: $greyMediumer;
-$bg-color-lightest: $greyLight;
-$bg-color-inverted: $greyLight;
+$bg-color: $white;
+$bg-color-light: $white;
+$bg-color-lighter: $white;
+$bg-color-lightest:$white;
+$bg-color-inverted: $white;
 
-$border-color: $greyMedium;
-$dark-border-color: $greyDark;
-$darker-border-color: rgba(125, 125, 125, 0.4);
+$border-color: $primary-60;
+$dark-border-color: $primary-80;
+$darker-border-color: $primary-100;
 
-$text-color: $grey;
-$text-color-dark: $greyMediumish;
-$text-color-darker: $greyMediumish2;
-$text-color-inverted: $greyDarker;
-$text-color-error: $redLight;
+$text-color: $primary-100;
+$text-color-dark: $primary-80;
+$text-color-darker: $primary-60;
+$text-color-inverted: $primary-100;
+$text-color-error: $accent-red;
 
-$link-color: $active-color;
-$hover-color: $contrast-color;
+$link-color: $accent-blue;
+$hover-color: $accent-yellow;
 
 :root {
-  --bg-color: #{$bg-color};
-  --bg-color-light: #{$bg-color-light};
-  --bg-color-lighter: #{$bg-color-lighter};
-  --text-color: #{$text-color};
-  --text-color-dark: #{$text-color-dark};
-  --text-color-darker: #{$text-color-darker};
-  --text-color-inverted: #{$text-color-inverted};
-  --text-color-error: #{$text-color-error};
-  --link-color: #{$link-color};
-  --hover-color: #{$contrast-color};
+  --bg-color: #{$white};
+  --bg-color-light: #{$white};
+  --bg-color-lighter: #{$white};
+  --text-color: #{$primary-100};
+  --text-color-dark: #{$primary-80};
+  --text-color-darker: #{$primary-100};
+  --text-color-inverted: #{$primary-100};
+  --text-color-error: #{$accent-red};
+  --link-color: #{$primary-100};
+  --hover-color: #{$accent-yellow};
   --border-color: #{$border-color};
-  --dark-border-color: #{$dark-border-color};
-  --darker-border-color: #{$darker-border-color};
-  --active-color: #{$active-color};
+  --dark-border-color: #{$primary-80};
+  --darker-border-color: #{$primary-100};
+  --active-color: #{$accent-green};
   --contrast-color: #{$contrast-color};
   --accent-color: #{$contrast-color};
   --accent-color-2: #{$active-color-dark};

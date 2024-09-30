@@ -14,7 +14,7 @@ const GmailMessage = ({
 }) => {
   // will look in spams too
   const link = `https://mail.google.com/mail/u/0/#search/${encodeURIComponent(
-    `from:${domain}+OR+from:stateofjs+OR+from:devographics+in:anywhere`,
+    `from:${domain}+OR+from:stateofjs+OR+from:devographics+in:anywhere`
   )}`;
   return <T token="accounts.magic_link.browser" values={{ link }} />;
 };
@@ -41,8 +41,8 @@ export const StandaloneMagicLoginForm = ({
   editionId,
   redirectTo,
 }: StandaloneMagicLoginFormProps) => {
-  const { t, locale } = useI18n()
-  const placeholder = t(`accounts.your_email`)
+  const { t, locale } = useI18n();
+  const placeholder = t(`accounts.your_email`);
   const [errorMsg, setErrorMsg] = useState("");
   const [successEmail, setSuccessEmail] = useState("");
   const [loading, setLoading] = useState(false);
@@ -58,9 +58,7 @@ export const StandaloneMagicLoginForm = ({
     resetMessages();
     const email = e?.currentTarget?.email?.value;
     if (!email) {
-      setErrorMsg(
-        t(`accounts.magic_link.no_email`),
-      );
+      setErrorMsg(t(`accounts.magic_link.no_email`));
       return;
     }
     localStorage && localStorage.setItem("email", email);

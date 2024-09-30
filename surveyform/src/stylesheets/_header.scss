@@ -1,3 +1,5 @@
+@use "sass:math";
+
 .nav-wrapper {
   padding-top: $spacing;
   padding-bottom: $spacing;
@@ -5,7 +7,18 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: $border;
+  border-bottom: $border3;
+  padding: $spacing;
+
+  @include small {
+    padding: math.div($spacing, 2);
+  }
+  @include medium {
+    padding: $spacing;
+  }
+  @include large {
+    padding: $spacing $spacing * 2;
+  }
 }
 .navbar {
   padding: 0;

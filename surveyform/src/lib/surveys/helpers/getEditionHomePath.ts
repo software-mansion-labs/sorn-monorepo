@@ -14,5 +14,5 @@ export function getEditionHomePath({
     editionId: edition.id,
   });
   const prefixSegment = "survey";
-  return "/" + [locale.id, prefixSegment, surveySlug, editionSlug].join("/");
+  return "/" + [prefixSegment, surveySlug, editionSlug].join("/");
 }

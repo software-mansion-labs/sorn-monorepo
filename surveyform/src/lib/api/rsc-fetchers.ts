@@ -9,6 +9,7 @@ import { getCommonContexts, safeLocaleIdFromParams } from "~/i18n/config";
 import { getLocaleDict } from "@devographics/i18n/server";
 import { type LocaleParsed } from "@devographics/i18n";
 import { rscLocaleIdContext } from "~/i18n/rsc-context";
+import { LANG } from "~/constants";
 
 /**
  * Will cache per localeId and contexts
@@ -20,10 +21,10 @@ export const rscLocaleNew = cache(
     localeId: string;
     contexts: Array<string>;
   }): // FIXME: the type is not properly inferred at time of writing, despite being correct in the package
-    Promise<
-      | { locale: LocaleParsed; error?: undefined }
-      | { error: Error; locale?: undefined }
-    > => {
+  Promise<
+    | { locale: LocaleParsed; error?: undefined }
+    | { error: Error; locale?: undefined }
+  > => {
     const { locale, error } = (await getLocaleDict(options)) as
       | { locale: LocaleParsed; error?: undefined }
       | { locale?: undefined; error: Error };
@@ -52,7 +53,7 @@ export const rscLocaleFromParams = (params: LocaleParams) =>
   unstable_cache(
     async (params: LocaleParams) => {
       const contexts = params.contexts || getCommonContexts();
-      const localeId = safeLocaleIdFromParams({ lang: params.lang });
+      const localeId = safeLocaleIdFromParams({ lang: LANG });
       // TODO: our previous implemention returns "data", "error", common in graphql
       // while the pipeline system insteads return the data or throw
       /*const {
@@ -76,19 +77,19 @@ export const rscLocaleFromParams = (params: LocaleParams) =>
 
 /**
  * Get current locale strings within React Server Components
- * 
+ *
  * Uses a server context to retrieve the "lang" param
- * supposing that you called setLocaleIdServerContext(params.lang) earlier
+ * supposing that you called setLocaleIdServerContext(LANG) earlier
  * or optionaly an explicit "localeIdParams"
  *
  * Contexts must be passed as a rest parameter in order to allow caching
  */
 export const rscLocaleCached = async ({
   contexts,
-  localeId
+  localeId,
 }: {
-  contexts?: Array<string>,
-  localeId?: string
+  contexts?: Array<string>;
+  localeId?: string;
 } = {}) => {
   const lang = localeId || rscLocaleIdContext();
   return rscLocaleFromParams({ lang, contexts });

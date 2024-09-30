@@ -11,12 +11,10 @@
   margin-bottom: $spacing;
 }
 .survey-image {
-  max-width: 600px;
-  margin: 0 auto $spacing * 1.5 auto;
+  display: flex;
+  justify-content: center;
   img {
-    display: block;
-    width: 100%;
-    height: auto;
+    margin: $spacing;
   }
   &-small {
     max-width: 420px;

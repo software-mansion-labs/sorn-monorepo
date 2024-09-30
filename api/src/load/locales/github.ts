@@ -19,8 +19,7 @@ const loadLocalesFromGitHubSameRepo = async ({
     localeContexts,
     pathIndex,
     org,
-    repo,
-    dir
+    repo
 }: {
     locales: RawLocale[]
     localeIds?: string[]
@@ -28,9 +27,8 @@ const loadLocalesFromGitHubSameRepo = async ({
     pathIndex: number
     org: string
     repo: string
-    dir: string
 }) => {
-    const url = `repos/${org}/${repo}/contents/${dir}`
+    const url = `repos/${org}/${repo}/contents}`
     console.log(`🌐 loadLocalesFromGitHubSameRepo (${url})`)
 
     const octokit = new Octokit({ auth: getEnvVar(EnvVar.GITHUB_TOKEN) })
@@ -39,40 +37,21 @@ const loadLocalesFromGitHubSameRepo = async ({
     const contents = await octokit.request('GET /repos/{owner}/{repo}/contents/{path}', {
         owner: org,
         repo,
-        path: dir
+        path: `locale-en-US`
     })
-    const localeDirectories = contents.data as any[]
+    console.log({ contents })
 
-    for (const localeDirectory of localeDirectories) {
-        const localeId = localeDirectory.name.replace('locale-', '')
-        if (localeIds && localeIds.length > 0 && localeIds.includes(localeId)) {
-            i++
-            console.log(
-                `📁 loading directory ${localeDirectory.name || localeDirectory.full_name} (${i}/${
-                    localeDirectories.length
-                }) (/repos/${org}/${repo}/contents/${localeDirectory.path})`
-            )
-            const contents = await octokit.request('GET /repos/{owner}/{repo}/contents/{path}', {
-                owner: org,
-                repo,
-                path: localeDirectory.path
-            })
-            const localeRawData = await processGitHubLocale({
-                contents,
-                localeRepo: localeDirectory,
-                pathIndex,
-                localeContexts
-            })
-            const existingLocaleIndex = locales.findIndex(l => l.id === localeRawData.id)
-            if (existingLocaleIndex !== -1) {
-                locales[existingLocaleIndex] = mergeLocales(
-                    locales[existingLocaleIndex],
-                    localeRawData
-                )
-            } else {
-                locales.push(localeRawData)
-            }
-        }
+    const localeRawData = await processGitHubLocale({
+        contents,
+        localeRepo: `locale-en-US`,
+        pathIndex,
+        localeContexts
+    })
+    const existingLocaleIndex = locales.findIndex(l => l.id === localeRawData.id)
+    if (existingLocaleIndex !== -1) {
+        locales[existingLocaleIndex] = mergeLocales(locales[existingLocaleIndex], localeRawData)
+    } else {
+        locales.push(localeRawData)
     }
 }
 
@@ -197,21 +176,21 @@ const processGitHubLocale = async ({
 export const loadAllFromGitHub = async (options: LoadAllOptions = {}): Promise<RawLocale[]> => {
     const { localeIds, localeContexts } = options
     const localesPathArray = parseEnvVariableArray(getEnvVar(EnvVar.GITHUB_PATH_LOCALES))
+    console.log(localesPathArray)
     let locales: RawLocale[] = []
     if (localesPathArray) {
         let pathIndex = 0
         for (const localesPath of localesPathArray) {
             pathIndex++
-            const [org, repo, dir] = localesPath?.split('/') || []
-            if (repo && dir) {
+            const [org, repo] = localesPath?.split('/') || []
+            if (repo) {
                 await loadLocalesFromGitHubSameRepo({
                     locales,
-                    localeIds,
+                    localeIds: ['locale-en-US'],
                     localeContexts,
                     pathIndex,
                     org,
-                    repo,
-                    dir
+                    repo
                 })
             } else if (org) {
                 await loadLocalesFromGitHubMultiRepo({

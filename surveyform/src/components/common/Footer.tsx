@@ -18,16 +18,12 @@ type LinkItemProps = {
 };
 const links: Array<LinkItemProps> = [
   {
-    component:
-      process.env.NEXT_PUBLIC_CONFIG === "tokyodev" ? (
-        <span>
-          &copy; 2023 <a href="https://tokyodev.com/">TokyoDev</a>
-        </span>
-      ) : (
-        <span>
-          &copy; 2023 <a href="https://devographics.com/">Devographics</a>
-        </span>
-      ),
+    component: (
+      <span>
+        &copy; 2024 <a href="https://swmansion.com/">Software Mansion</a>,
+        courtesy of <a href="https://www.devographics.com/">Devographics</a>
+      </span>
+    ),
   },
   {
     showIf: ({ currentUser }) => !!currentUser,
@@ -41,39 +37,11 @@ const links: Array<LinkItemProps> = [
   },
   {
     id: "general.privacy_policy",
-    href: "/privacy-policy",
-  },
-  {
-    id: "general.leave_issue2",
-    href: "https://github.com/Devographics/Monorepo/issues",
+    href: "https://swmansion.com/privacy/",
   },
   {
     showIf: ({ currentUser }) => !!currentUser,
     component: <LogoutButton asLink={true} />,
-  },
-  {
-    id: "general.help_us_translate",
-    href: "https://github.com/Devographics/locale-en-US",
-  },
-  {
-    showIf: () => publicConfig.isDev || publicConfig.isTest,
-    // @ts-ignore
-    id: "Demo survey",
-    href: routes.survey.demo.href,
-  },
-  {
-    showIf: () => publicConfig.isDev || publicConfig.isTest,
-    // @ts-ignore
-    id: "Translator mode",
-    component: (
-      <button
-        onClick={() => {
-          enableTranslatorMode();
-        }}
-      >
-        Translator mode
-      </button>
-    ),
   },
 ];
 
@@ -97,7 +65,6 @@ const LinkWrapper = ({ children }) => (
 );
 
 const LinkItem = ({ id, href, showIf, component }: LinkItemProps) => {
-  const { localizePath } = useI18n()
   const { currentUser } = useCurrentUser();
   if (showIf && !showIf({ currentUser })) {
     return null;
@@ -119,7 +86,7 @@ const LinkItem = ({ id, href, showIf, component }: LinkItemProps) => {
           <T token={id} fallback={id} />
         </a>
       ) : (
-        <Link href={localizePath(href)}>
+        <Link href={href}>
           <T token={id} fallback={id} />
         </Link>
       )}

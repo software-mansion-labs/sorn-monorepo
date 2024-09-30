@@ -3,7 +3,7 @@ import { ResponseDocument } from "@devographics/types";
 import { notFound } from "next/navigation";
 import { cache } from "react";
 import { UserDocument } from "~/account/user/typings";
-import { rscMustGetSurveyEditionFromUrl } from "~/app/[lang]/survey/[slug]/[year]/rsc-fetchers";
+import { rscMustGetSurveyEditionFromUrl } from "~/app/(mainLayout)/survey/[slug]/[year]/rsc-fetchers";
 import { RscError } from "../rsc-error";
 
 /**

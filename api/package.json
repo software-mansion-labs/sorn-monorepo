@@ -65,7 +65,8 @@
     },
     "scripts": {
         "clean": "rm -Rf ./dist",
-        "build": "NODE_ENV=production tsup && cp -R public/ dist/",
+        "buildapi": "NODE_ENV=production tsup && cp -R public/ dist/",
+        "heroku-postbuild": "NODE_ENV=production tsup && cp -R public/ dist/",
         "dev": "ENV_FILE=.env.devographics.local NODE_ENV=development tsup --watch ./src --onSuccess='cp -R public/ dist/ && node ./dist/server.mjs'",
         "test": "jest",
         "test-e2e": "playwright test",

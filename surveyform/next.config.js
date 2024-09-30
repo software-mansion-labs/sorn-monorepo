@@ -31,7 +31,7 @@ const moduleExports = (phase, { defaultConfig }) => {
       ignoreDuringBuilds: true,
     },
     env: {
-      NEXT_PUBLIC_NODE_ENV: process.env.NODE_ENV
+      NEXT_PUBLIC_NODE_ENV: process.env.NODE_ENV,
     },
     webpack: function (configArg, otherArgs) {
       // run previously configured function!

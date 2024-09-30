@@ -34,12 +34,36 @@
     padding: 0 math.div($spacing, 2);
   }
 }
+.account,
+.contents-medium {
+  max-width: 900px;
+  margin: 0 auto;
+  @include small {
+    padding: 0 math.div($spacing, 2);
+  }
+}
 .surveys {
+  
 }
 .surveys-group {
   max-width: 300px;
   margin: 0 auto;
   margin-bottom: $spacing * 3;
+}
+.survey-title {
+  font-size: 4em;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: $spacing * 4;
+}
+.survey-subtitle {
+  font-size: 2.5em;
+  font-weight: 400;
+  text-align: center;
+  margin-bottom: $spacing * 3;
+}
+.survey-opening-words-content {
+  font-size: 1.2rem;
 }
 .surveys-none {
   text-align: center;

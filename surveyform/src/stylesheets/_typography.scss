@@ -29,9 +29,25 @@ $bold: 600;
   font-weight: $bold;
 }
 
+@font-face {
+  font-family: "Aeonik Regular";
+  src: url("https://stateofreactnative.com/fonts/Aeonik-Regular.woff2")
+      format("woff2"),
+    url("https://stateofreactnative.com/fonts/Aeonik-Regular.woff")
+      format("woff");
+  font-display: swap;
+}
+@font-face {
+  font-family: "Aeonik Bold";
+  src: url("https://stateofreactnative.com/fonts/Aeonik-Bold.woff2")
+      format("woff2"),
+    url("https://stateofreactnative.com/fonts/Aeonik-Bold.woff") format("woff");
+  font-display: swap;
+}
+
 @mixin primary-font {
   // font-family: "IBM Plex Mono", monospace;
-  font-family: avenir next, avenir, -apple-system, BlinkMacSystemFont, segoe ui,
+  font-family: "Aeonik Regular" ,avenir next, avenir, -apple-system, BlinkMacSystemFont, segoe ui,
     helvetica neue, helvetica, Cantarell, Ubuntu, roboto, noto, arial,
     sans-serif;
   font-weight: $medium;
