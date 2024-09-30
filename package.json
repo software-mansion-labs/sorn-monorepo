@@ -6,5 +6,8 @@
     "resolutions": {
         "webpack": "5.88.2",
         "graphql": "16.9.0"
+    },
+    "scripts": {
+        "build": "pnpm -r buildapi"
     }
 }
